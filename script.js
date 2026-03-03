@@ -44,11 +44,12 @@ const getAnchorOffset = () => {
 };
 
 const scrollToHashTarget = (hashValue, behavior = 'smooth') => {
-    if (!hashValue || !hashValue.startsWith('#')) {
+    if (!hashValue || !hashValue.startsWith('#') || hashValue.length <= 1) {
         return;
     }
 
-    const targetElement = document.querySelector(hashValue);
+    const targetId = decodeURIComponent(hashValue.slice(1));
+    const targetElement = document.getElementById(targetId);
     if (!targetElement) {
         return;
     }
@@ -67,7 +68,8 @@ document.querySelectorAll('a[href^="#"]').forEach((anchorLink) => {
             return;
         }
 
-        const targetElement = document.querySelector(hash);
+        const targetId = decodeURIComponent(hash.slice(1));
+        const targetElement = targetId ? document.getElementById(targetId) : null;
         if (!targetElement) {
             return;
         }
@@ -145,7 +147,6 @@ document.querySelectorAll('.site-header .nav-links').forEach((navLinks) => {
 
             return {
                 item,
-                sectionId,
                 sectionElement
             };
         })
