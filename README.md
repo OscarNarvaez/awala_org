@@ -27,7 +27,7 @@ Este proyecto implementa un sitio **multi-página** en HTML, CSS y JavaScript va
 - Página de noticias y novedades
 - Página de participación (alianzas, voluntariado, convocatorias, empleo)
 - Página de donaciones con formulario y resumen dinámico
-- Formulario de contacto integrado vía Formspree
+- Formulario de contacto integrado vía backend SMTP
 
 ## Características principales
 
@@ -40,6 +40,7 @@ Este proyecto implementa un sitio **multi-página** en HTML, CSS y JavaScript va
   - frecuencia (única/mensual)
   - montos predefinidos y monto personalizado
   - resumen de aporte en tiempo real
+  - checkout integrado con **Wompi**
 - **Estilo visual unificado** y componentes compartidos en una sola hoja CSS
 
 ## Tecnologías
@@ -48,7 +49,8 @@ Este proyecto implementa un sitio **multi-página** en HTML, CSS y JavaScript va
 - **CSS3** (estilos personalizados, diseño responsive)
 - **JavaScript (ES6+)** sin frameworks
 - **Google Fonts (Montserrat)**
-- **Formspree** para el formulario de contacto
+- **Node.js + Express** para endpoints de contacto y donaciones
+- **Nodemailer** para envío de correos de contacto
 
 ## Estructura del proyecto
 
@@ -68,10 +70,29 @@ ONG/
 
 ## Puesta en marcha local
 
-### Opción 1: apertura directa
-Abrir `index.html` en el navegador.
+### Opción 1: servidor Node (recomendado para donaciones)
 
-### Opción 2: servidor local (recomendado)
+1. Instalar dependencias:
+
+```bash
+npm install
+```
+
+2. Crear archivo `.env` tomando como base `.env.example` (copia y pega su contenido).
+
+3. Completar variables en `.env`:
+  - Wompi: `WOMPI_PUBLIC_KEY`, `WOMPI_PRIVATE_KEY`, `WOMPI_INTEGRITY_SECRET`, `WOMPI_EVENTS_SECRET`
+  - Contacto SMTP: `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`
+
+4. Levantar el sitio:
+
+```bash
+npm start
+```
+
+Luego abrir: `http://localhost:5500/`
+
+### Opción 2: servidor local simple (sin backend de pagos)
 
 ```bash
 # Python 3
@@ -98,29 +119,38 @@ El proyecto está alojado en GitHub:
 
 ## Configuraciones importantes
 
-### 1) Contacto por Formspree
-En `index.html` se usa el atributo:
+### 1) Contacto por SMTP (backend)
+El formulario de contacto envía al endpoint:
 
-- `data-formspree-endpoint="https://formspree.io/f/mojnzygk"`
+- `POST /api/contact`
 
-Si cambias de cuenta o formulario, actualiza ese endpoint.
+El destinatario final se define con:
 
-### 2) Donaciones
-La página `donaciones.html` incluye lógica de UI para donaciones, pero **no integra aún una pasarela de pago real**. 
+- `CONTACT_TO_EMAIL=awala@awalacolombia.org`
 
-Para producción, conectar el botón de envío con una pasarela (por ejemplo, Wompi, Mercado Pago, Stripe, PayU, etc.) y validar:
+Si usas Google Workspace, configura SMTP con `smtp.gmail.com` y credenciales válidas en `.env`.
 
-- seguridad
-- trazabilidad
-- confirmación de pagos
-- cumplimiento legal y tratamiento de datos
+### 2) Donaciones (Wompi)
+La pasarela quedó integrada con endpoints en `server.js`:
+
+- `POST /api/wompi/checkout-data`
+- `GET /api/wompi/transactions/:id`
+- `POST /api/wompi/webhook`
+
+El endpoint de webhook valida firma criptográfica (checksum SHA-256) con `WOMPI_EVENTS_SECRET` usando:
+
+- `signature.properties`
+- `timestamp`
+- `signature.checksum`
+
+> Para ambiente productivo, configura el webhook en el dashboard de Wompi apuntando a `/api/wompi/webhook`, define el secreto de eventos y usa llaves de producción.
 
 ### 3) Contenido pendiente de ajuste
 Existen textos marcados en el sitio para reemplazo editorial (por ejemplo: estadísticas y destinos de donación).
 
 ## Hoja de ruta
 
-- [ ] Conectar donaciones con pasarela de pago
+- [x] Conectar donaciones con pasarela de pago
 - [ ] Reemplazar datos placeholder por cifras verificadas
 - [ ] Añadir analítica web (eventos de contacto y donación)
 - [ ] Optimizar imágenes y rendimiento (LCP/CLS)

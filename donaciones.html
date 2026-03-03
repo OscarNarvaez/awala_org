@@ -81,7 +81,8 @@
                     <h2>Haz tu donación</h2>
                     <p class="donation-intro">Elige la modalidad y el monto que deseas aportar.</p>
 
-                    <form class="donation-form" data-donation-form action="#" method="post">
+                    <form class="donation-form" data-donation-form data-donation-endpoint="/api/wompi/checkout-data"
+                        data-donation-transaction-endpoint="/api/wompi/transactions" action="#" method="post">
                         <div class="donation-fieldset">
                             <span class="donation-label">Frecuencia</span>
                             <div class="donation-chip-group" role="group" aria-label="Frecuencia de donación">
@@ -137,8 +138,7 @@
                             <span>Acepto el tratamiento de datos para gestión de donaciones.</span>
                         </label>
 
-                        <button type="submit" class="donation-submit">Continuar donación (CONECTAR A UNA PASARELA DE
-                            PAGOS)</button>
+                        <button type="submit" class="donation-submit">♥ DONAR ♥</button>
                     </form>
                 </article>
 
@@ -153,7 +153,7 @@
 
                     <div class="donation-trust-box">
                         <h4>Donación segura</h4>
-                        <p>Trabajamos con procesos transparentes y reportes periódicos de resultados e impacto.</p>
+                        <p>Pagos procesados por Wompi con seguimiento de transacciones y reportes de impacto.</p>
                     </div>
                 </aside>
             </div>
@@ -195,7 +195,7 @@
 
             <div class="footer-contact">
                 <h4>Contacto</h4>
-                <a href="mailto:contacto@awalaong.org" class="footer-mail">contacto@awalaong.org</a>
+                <a href="mailto:awala@awalacolombia.org" class="footer-mail">awala@awalacolombia.org</a>
                 <p>+57 300 123 4567</p>
                 <p>Bogotá, Colombia</p>
             </div>

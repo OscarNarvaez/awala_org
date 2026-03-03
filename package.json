@@ -1,0 +1,17 @@
+{
+    "name": "awala-ong-web",
+    "version": "1.0.0",
+    "description": "Sitio web de Awala ONG con integración de donaciones por Wompi.",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "engines": {
+        "node": ">=18"
+    },
+    "dependencies": {
+        "dotenv": "^16.6.1",
+        "express": "^4.21.2",
+        "nodemailer": "^6.10.1"
+    }
+}

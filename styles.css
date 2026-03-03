@@ -1439,6 +1439,30 @@ body {
     background: #1f499b;
 }
 
+.donation-submit:disabled {
+    opacity: 0.72;
+    cursor: not-allowed;
+}
+
+.donation-form-status {
+    margin-top: 6px;
+    font-size: 13.5px;
+    font-weight: 600;
+    min-height: 20px;
+}
+
+.donation-form-status.is-loading {
+    color: #365794;
+}
+
+.donation-form-status.is-success {
+    color: #1b7f43;
+}
+
+.donation-form-status.is-error {
+    color: #b42318;
+}
+
 .donation-summary-card {
     padding: 24px;
     display: flex;

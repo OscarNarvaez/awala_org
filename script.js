@@ -257,7 +257,7 @@ const mailOptionsPanel = document.querySelector('[data-mail-options]');
 const mailProviderButtons = document.querySelectorAll('[data-email-provider]');
 
 if (mailTriggerButton && mailOptionsPanel && mailProviderButtons.length) {
-    const recipient = 'julinnnarget@gmail.com';
+    const recipient = 'awala@awalacolombia.org';
     const subject = 'Postulación - Trabaja con Awala';
     const body = [
         'Título: Postulación para vacante en Awala',
@@ -385,9 +385,7 @@ if (contactForm) {
             }
         };
 
-        const formspreeEndpoint = (contactForm.dataset.formspreeEndpoint || '').trim();
-        const isValidFormspreeEndpoint = /^https:\/\/formspree\.io\/f\/[a-zA-Z0-9]+$/.test(formspreeEndpoint);
-        const hasPlaceholderEndpoint = formspreeEndpoint.includes('TU_FORM_ID');
+        const contactEndpoint = (contactForm.dataset.contactEndpoint || contactForm.dataset.formspreeEndpoint || '').trim();
 
         contactForm.addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -398,8 +396,8 @@ if (contactForm) {
                 return;
             }
 
-            if (!isValidFormspreeEndpoint || hasPlaceholderEndpoint) {
-                setFormStatus('Falta configurar Formspree.', 'is-error');
+            if (!contactEndpoint || contactEndpoint.includes('TU_ENDPOINT')) {
+                setFormStatus('Falta configurar el endpoint de contacto.', 'is-error');
                 return;
             }
 
@@ -418,7 +416,7 @@ if (contactForm) {
             setFormStatus('Enviando mensaje...', 'is-loading');
 
             try {
-                const response = await fetch(formspreeEndpoint, {
+                const response = await fetch(contactEndpoint, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -427,10 +425,16 @@ if (contactForm) {
                     body: JSON.stringify(formData)
                 });
 
-                const result = await response.json();
+                let result = null;
+
+                try {
+                    result = await response.json();
+                } catch {
+                    result = null;
+                }
 
                 if (!response.ok) {
-                    const detail = result?.errors?.[0]?.message || 'No se pudo enviar el formulario.';
+                    const detail = result?.message || result?.errors?.[0]?.message || 'No se pudo enviar el formulario.';
                     throw new Error(detail);
                 }
 
@@ -455,10 +459,22 @@ if (donationForm) {
     const destinationSelect = donationForm.querySelector('[data-donation-destination]');
     const customAmountWrap = donationForm.querySelector('[data-custom-amount-wrap]');
     const customAmountInput = donationForm.querySelector('#custom-amount');
+    const submitButton = donationForm.querySelector('.donation-submit');
 
     const summaryFrequency = document.querySelector('[data-donation-summary-frequency]');
     const summaryAmount = document.querySelector('[data-donation-summary-amount]');
     const summaryDestination = document.querySelector('[data-donation-summary-destination]');
+    const donationEndpoint = (donationForm.dataset.donationEndpoint || '/api/wompi/checkout-data').trim();
+    const transactionEndpoint = (donationForm.dataset.donationTransactionEndpoint || '/api/wompi/transactions').trim();
+
+    let statusElement = donationForm.querySelector('.donation-form-status');
+
+    if (!statusElement) {
+        statusElement = document.createElement('p');
+        statusElement.className = 'donation-form-status';
+        statusElement.setAttribute('aria-live', 'polite');
+        donationForm.append(statusElement);
+    }
 
     const frequencyLabels = {
         unica: 'Única',
@@ -479,6 +495,77 @@ if (donationForm) {
             currency: 'COP',
             maximumFractionDigits: 0
         }).format(amount);
+    };
+
+    const setDonationStatus = (message, statusType) => {
+        if (!statusElement) {
+            return;
+        }
+
+        statusElement.textContent = message;
+        statusElement.classList.remove('is-success', 'is-error', 'is-loading');
+
+        if (statusType) {
+            statusElement.classList.add(statusType);
+        }
+    };
+
+    const ensureWompiWidgetLoaded = () => {
+        if (typeof window.WidgetCheckout === 'function') {
+            return Promise.resolve();
+        }
+
+        return new Promise((resolve, reject) => {
+            const existingScript = document.querySelector('script[data-wompi-widget]');
+
+            if (existingScript) {
+                existingScript.addEventListener('load', () => resolve(), { once: true });
+                existingScript.addEventListener('error', () => reject(new Error('No se pudo cargar el widget de Wompi.')), {
+                    once: true
+                });
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = 'https://checkout.wompi.co/widget.js';
+            script.async = true;
+            script.dataset.wompiWidget = 'true';
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error('No se pudo cargar el widget de Wompi.'));
+            document.head.append(script);
+        });
+    };
+
+    const statusMessages = {
+        APPROVED: '¡Gracias! Tu donación fue aprobada correctamente.',
+        DECLINED: 'La transacción fue rechazada. Puedes intentar con otro medio de pago.',
+        VOIDED: 'La transacción fue anulada.',
+        ERROR: 'Ocurrió un error durante el pago. Intenta nuevamente.',
+        PENDING: 'Tu pago está pendiente de confirmación por Wompi.'
+    };
+
+    const normalizeTransactionStatus = (status) => {
+        const normalizedStatus = String(status || '').toUpperCase();
+        const message = statusMessages[normalizedStatus] || 'Estamos validando el estado de tu donación.';
+        const typeClass = normalizedStatus === 'APPROVED'
+            ? 'is-success'
+            : normalizedStatus === 'PENDING'
+                ? 'is-loading'
+                : 'is-error';
+
+        return { normalizedStatus, message, typeClass };
+    };
+
+    const fetchTransactionStatus = async (transactionId) => {
+        const response = await fetch(`${transactionEndpoint}/${encodeURIComponent(transactionId)}`);
+        const payload = await response.json();
+
+        if (!response.ok) {
+            const detail = payload?.message || 'No fue posible validar el estado de la transacción.';
+            throw new Error(detail);
+        }
+
+        return payload;
     };
 
     const updateSummary = () => {
@@ -560,6 +647,94 @@ if (donationForm) {
     if (destinationSelect) {
         destinationSelect.addEventListener('change', updateSummary);
     }
+
+    donationForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        if (!donationForm.checkValidity()) {
+            donationForm.reportValidity();
+            setDonationStatus('Por favor completa todos los campos requeridos.', 'is-error');
+            return;
+        }
+
+        const amountValue = Number(amountInput?.value || 0);
+
+        if (!Number.isFinite(amountValue) || amountValue < 5000) {
+            setDonationStatus('El monto mínimo para donar es $5.000 COP.', 'is-error');
+            return;
+        }
+
+        if (submitButton) {
+            submitButton.disabled = true;
+        }
+
+        setDonationStatus('Preparando checkout seguro con Wompi...', 'is-loading');
+
+        try {
+            const payload = {
+                amount: amountValue,
+                frequency: frequencyInput?.value || 'unica',
+                destination: destinationSelect?.value || 'general',
+                donorName: donationForm.querySelector('#donante-nombre')?.value?.trim() || '',
+                donorEmail: donationForm.querySelector('#donante-correo')?.value?.trim() || ''
+            };
+
+            const response = await fetch(donationEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                const detail = result?.message || 'No fue posible iniciar la donación.';
+                throw new Error(detail);
+            }
+
+            const checkoutConfig = result?.checkout;
+
+            if (!checkoutConfig) {
+                throw new Error('No se recibió configuración de checkout desde el servidor.');
+            }
+
+            await ensureWompiWidgetLoaded();
+
+            if (typeof window.WidgetCheckout !== 'function') {
+                throw new Error('El widget de Wompi no está disponible en este navegador.');
+            }
+
+            setDonationStatus('Se abrió Wompi. Completa el pago para finalizar tu donación.', 'is-loading');
+
+            const checkout = new window.WidgetCheckout(checkoutConfig);
+
+            checkout.open(async (checkoutResult) => {
+                try {
+                    const transactionData = checkoutResult?.transaction;
+
+                    if (!transactionData?.id) {
+                        setDonationStatus('No se completó el pago. Puedes intentarlo nuevamente.', 'is-error');
+                        return;
+                    }
+
+                    const backendStatus = await fetchTransactionStatus(transactionData.id);
+                    const { message, typeClass } = normalizeTransactionStatus(backendStatus?.status);
+                    setDonationStatus(message, typeClass);
+                } catch (error) {
+                    setDonationStatus(`No se pudo confirmar el pago: ${error.message}`, 'is-error');
+                }
+            });
+        } catch (error) {
+            setDonationStatus(`No se pudo iniciar la donación: ${error.message}`, 'is-error');
+        } finally {
+            if (submitButton) {
+                submitButton.disabled = false;
+            }
+        }
+    });
 
     updateSummary();
 }
