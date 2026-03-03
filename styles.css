@@ -44,6 +44,15 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 10px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.brand:hover {
+    transform: translateY(-1px);
+    opacity: 0.96;
 }
 
 .brand-logo {
