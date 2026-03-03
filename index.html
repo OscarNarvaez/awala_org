@@ -44,6 +44,11 @@
         </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://pacificotaskforce.com" crossorigin />
+    <link rel="dns-prefetch" href="//images.unsplash.com" />
+    <link rel="preload" as="image" href="./images/logo.png" fetchpriority="high" />
+    <link rel="preload" as="image"
+        href="https://pacificotaskforce.com/wp-content/uploads/2024/06/IMG_2894-1-scaled.jpg" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
@@ -54,7 +59,8 @@
     <header class="site-header">
         <div class="container navbar">
             <div class="brand">
-                <div class="brand-logo"> <img src="./images/logo.png" alt="Logo Awala"></div>
+                <div class="brand-logo"> <img src="./images/logo.png" alt="Logo Awala" width="72" height="72"
+                        decoding="async" fetchpriority="high"></div>
                 <div class="brand-text">
                     <span class="brand-name">Awala</span>
                     <span class="brand-tagline">Construyendo paz<br />desde los territorios</span>
@@ -375,7 +381,8 @@
         <div class="container footer-top">
             <div class="footer-brand">
                 <div class="footer-brand-head">
-                    <img src="./images/logo.png" alt="Logo Awala" class="footer-logo" />
+                    <img src="./images/logo.png" alt="Logo Awala" class="footer-logo" width="48" height="48"
+                        loading="lazy" decoding="async" />
                     <div>
                         <h3>Awala ONG</h3>
                         <p class="footer-tag">Construyendo paz desde los territorios</p>

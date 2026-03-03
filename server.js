@@ -3,6 +3,7 @@ require('dotenv').config();
 const path = require('path');
 const crypto = require('crypto');
 const express = require('express');
+const compression = require('compression');
 
 const app = express();
 const PORT = Number(process.env.PORT || 5500);
@@ -15,7 +16,27 @@ const WOMPI_EVENTS_SECRET = (process.env.WOMPI_EVENTS_SECRET || '').trim();
 const WOMPI_API_BASE = 'https://api.wompi.co/v1';
 
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(compression({ threshold: 1024 }));
+app.use(express.static(__dirname, {
+    etag: true,
+    lastModified: true,
+    maxAge: '7d',
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.html')) {
+            res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+            return;
+        }
+
+        if (/\.(?:css|js)$/i.test(filePath)) {
+            res.setHeader('Cache-Control', 'public, max-age=604800, stale-while-revalidate=86400');
+            return;
+        }
+
+        if (/\.(?:png|jpe?g|gif|webp|avif|svg|ico|woff2?|ttf|otf)$/i.test(filePath)) {
+            res.setHeader('Cache-Control', 'public, max-age=2592000, stale-while-revalidate=86400');
+        }
+    }
+}));
 
 const assertWompiConfig = (res) => {
     if (!WOMPI_PUBLIC_KEY || !WOMPI_PRIVATE_KEY || !WOMPI_INTEGRITY_SECRET) {

@@ -37,6 +37,11 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://s3.amazonaws.com" crossorigin />
+    <link rel="dns-prefetch" href="//images.unsplash.com" />
+    <link rel="preload" as="image" href="./images/logo.png" fetchpriority="high" />
+    <link rel="preload" as="image"
+        href="https://s3.amazonaws.com/rtvc-assets-canalinstitucional.tv/s3fs-public/styles/interna_noticias_after_1222x547_/public/2023-02/tumaco.jpg?itok=rc7599to" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
@@ -47,7 +52,8 @@
     <header class="site-header">
         <div class="container navbar">
             <div class="brand">
-                <div class="brand-logo"><img src="./images/logo.png" alt="Logo Awala"></div>
+                <div class="brand-logo"><img src="./images/logo.png" alt="Logo Awala" width="72" height="72"
+                    decoding="async" fetchpriority="high"></div>
                 <div class="brand-text">
                     <span class="brand-name">Awala</span>
                     <span class="brand-tagline">Construyendo paz<br />desde los territorios</span>
@@ -77,154 +83,102 @@
     </header>
 
     <main class="projects-page">
-        <section class="projects-hero">
+        <section class="pgsp-showcase">
             <div class="container">
-                <h1>Proyecto estratégico de AWALA</h1>
-                <p>Plan de Gestión Social del Proyecto de Interconexión Energética Pacífico.</p>
-            </div>
-        </section>
-
-        <section class="projects-list-section">
-            <div class="container projects-list">
-                <article class="project-item project-item-full">
-                    <div class="project-item-image project-image-pgsp" role="img"
-                        aria-label="Territorio del Pacífico y comunidades vinculadas al proyecto de interconexión energética">
-                    </div>
-                    <div class="project-item-body">
-                        <span class="project-status">Proyecto principal</span>
-                        <h2>Plan de Gestión Social (PGS) — Proyecto de Interconexión Energética Pacífico</h2>
-                        <p>
-                            La Corporación AWALA lidera la implementación del Plan de Gestión Social del Proyecto de
-                            Interconexión Energética Pacífico, con enfoque territorial, intercultural y de derechos.
-                            La estrategia articula participación ciudadana, gestión preventiva de conflictividades,
-                            fortalecimiento comunitario y monitoreo por resultados en Cauca y Nariño.
-                        </p>
-
-                        <div class="project-detail-grid">
-                            <section class="project-detail-card">
-                                <h3>Presentación de AWALA</h3>
-                                <ul>
-                                    <li>15 años de experiencia en construcción de paz y desarrollo territorial.</li>
-                                    <li>Legitimidad comunitaria y capacidad de articulación institucional.</li>
-                                    <li>Metodologías participativas con enfoque de derechos e inclusión.</li>
-                                </ul>
-                            </section>
-
-                            <section class="project-detail-card">
-                                <h3>Valor estratégico de la propuesta</h3>
-                                <ul>
-                                    <li>Contribuye a la prevención de riesgos sociales y al fortalecimiento de
-                                        confianza.</li>
-                                    <li>Integra innovación social, enfoque interdisciplinario e interculturalidad.</li>
-                                    <li>Promueve transformación territorial con participación efectiva.</li>
-                                </ul>
-                            </section>
-
-                            <section class="project-detail-card">
-                                <h3>Componentes del Plan de Gestión Social</h3>
-                                <ul>
-                                    <li>Socialización de obra, participación ciudadana y veeduría comunitaria.</li>
-                                    <li>Análisis social territorial y caracterización poblacional participativa.</li>
-                                    <li>Gestión de talento local, formación comunitaria y mecanismo PQR.</li>
-                                </ul>
-                            </section>
-
-                            <section class="project-detail-card">
-                                <h3>Participación y socialización de la obra</h3>
-                                <ul>
-                                    <li>Convocatoria amplia en medios locales y canales comunitarios.</li>
-                                    <li>Jornadas pedagógicas con diálogo intercultural y concertación de acuerdos.</li>
-                                    <li>Sistematización y devolución de resultados a las comunidades.</li>
-                                </ul>
-                            </section>
-
-                            <section class="project-detail-card">
-                                <h3>Talento humano local</h3>
-                                <ul>
-                                    <li>Perfiles y criterios de selección definidos con trazabilidad técnica.</li>
-                                    <li>Convocatoria y radicación única en veredas y municipios priorizados.</li>
-                                    <li>Control documental, depuración y entrega para selección objetiva de la UT.</li>
-                                </ul>
-                            </section>
-
-                            <section class="project-detail-card">
-                                <h3>Análisis social y cartografía social viva</h3>
-                                <ul>
-                                    <li>Revisión de contexto, trabajo de campo y validación participativa.</li>
-                                    <li>Aplicación de encuestas, entrevistas y grupos focales.</li>
-                                    <li>Cartografía social para lectura comunitaria de dinámicas territoriales.</li>
-                                </ul>
-                            </section>
-
-                            <section class="project-detail-card">
-                                <h3>Comité de apoyo y veeduría ciudadana</h3>
-                                <ul>
-                                    <li>Conformación democrática de representación comunitaria por municipio.</li>
-                                    <li>Formalización mediante actas, inscripción y reglas operativas.</li>
-                                    <li>Seguimiento social a compromisos y gestión territorial del proyecto.</li>
-                                </ul>
-                            </section>
-
-                            <section class="project-detail-card">
-                                <h3>Formación para la transformación</h3>
-                                <ul>
-                                    <li>Integración entre equipos técnicos, sociales y comunidad.</li>
-                                    <li>Fortalecimiento de ciudadanía energética y apropiación social de la obra.</li>
-                                    <li>Promoción de corresponsabilidad para uso responsable y sostenibilidad.</li>
-                                </ul>
-                            </section>
-
-                            <section class="project-detail-card">
-                                <h3>Prevención y atención de conflictividades</h3>
-                                <ul>
-                                    <li>Esquema PQR con equipo responsable y canales presenciales/no presenciales.</li>
-                                    <li>Clasificación de casos por nivel de riesgo e impacto.</li>
-                                    <li>Ruta de atención oportuna para prevenir escalamiento de conflictos.</li>
-                                </ul>
-                            </section>
-
-                            <section class="project-detail-card">
-                                <h3>Liderazgo, innovación y enfoque de género</h3>
-                                <ul>
-                                    <li>Red de líderes comunitarios para apropiación y sostenibilidad del proyecto.</li>
-                                    <li>Laboratorios de innovación para uso productivo de la energía.</li>
-                                    <li>Impulso a emprendimientos locales con enfoque de género.</li>
-                                </ul>
-                            </section>
-
-                            <section class="project-detail-card">
-                                <h3>Estrategia de comunicaciones</h3>
-                                <ul>
-                                    <li>Comunicación clara, inclusiva y bidireccional con las comunidades.</li>
-                                    <li>Narrativas de transformación, transparencia y legitimidad social.</li>
-                                    <li>Posicionamiento positivo de la infraestructura como bien colectivo.</li>
-                                </ul>
-                            </section>
-
-                            <section class="project-detail-card">
-                                <h3>Operativización, monitoreo y valor agregado UT</h3>
-                                <ul>
-                                    <li>Presencia territorial permanente con equipo interdisciplinario.</li>
-                                    <li>Monitoreo RBM: impacto, resultados, productos y actividades.</li>
-                                    <li>Prevención de conflictividades y cumplimiento social del contrato.</li>
-                                </ul>
-                            </section>
-
-                            <section class="project-detail-card">
-                                <h3>Estructura económica y contractual</h3>
-                                <ul>
-                                    <li>Gerencia técnica y operativa del componente social por AWALA.</li>
-                                    <li>Coordinación territorial, logística y administración financiera integral.</li>
-                                    <li>Resultados verificables para implementación efectiva y cierre social.</li>
-                                </ul>
-                            </section>
+                <article class="pgsp-board">
+                    <header class="pgsp-hero" role="img"
+                        aria-label="Interconexión eléctrica para comunidades rurales del Pacífico">
+                        <div class="pgsp-hero-content">
+                            <h1>Interconexión eléctrica para comunidades rurales del Pacífico</h1>
+                            <p>Energía para el desarrollo territorial y la innovación comunitaria.</p>
+                            <a class="pgsp-cta" href="Presentación_2025_PGSPacífico.pdf" target="_blank"
+                                rel="noopener noreferrer">Conocer el proyecto</a>
                         </div>
+                    </header>
 
-                        <p class="project-closing-message">
-                            <strong>Mensaje AWALA:</strong> conectar el Pacífico con energía es impulsar
-                            desarrollo territorial, inclusión y futuro sostenible.
-                        </p>
-                    </div>
+                    <section class="pgsp-section">
+                        <h2>Proyecto en cifras</h2>
+                        <div class="pgsp-stats-grid">
+                            <article class="pgsp-stat-card">
+                                <strong>15.699</strong>
+                                <span>Familias beneficiadas</span>
+                            </article>
+                            <article class="pgsp-stat-card">
+                                <strong>2</strong>
+                                <span>Departamentos</span>
+                            </article>
+                            <article class="pgsp-stat-card">
+                                <strong>9</strong>
+                                <span>Municipios</span>
+                            </article>
+                            <article class="pgsp-stat-card">
+                                <strong>$3.308 MM</strong>
+                                <span>Inversión estimada</span>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="pgsp-section">
+                        <h2>Territorios del proyecto</h2>
+                        <div class="pgsp-territory-grid">
+                            <div class="pgsp-territory-image" role="img"
+                                aria-label="Territorios costeros del Pacífico colombiano"></div>
+                            <div class="pgsp-territory-card">
+                                <h3>Nariño y Cauca</h3>
+                                <ul>
+                                    <li>Tumaco</li>
+                                    <li>La Tola</li>
+                                    <li>Mosquera</li>
+                                    <li>Olaya Herrera</li>
+                                    <li>Francisco Pizarro</li>
+                                    <li>Santa Bárbara</li>
+                                    <li>Municipios priorizados del Cauca</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="pgsp-note">El proyecto se desarrolla en territorios rurales costeros del Pacífico
+                            colombiano donde el acceso a energía eléctrica ha sido históricamente limitado.</p>
+                    </section>
+
+                    <section class="pgsp-section">
+                        <h2>Infraestructura energética para el Pacífico</h2>
+                        <div class="pgsp-pillars-grid">
+                            <article class="pgsp-pillar"><span>⚡</span>Subestaciones eléctricas</article>
+                            <article class="pgsp-pillar"><span>🔌</span>Redes eléctricas</article>
+                            <article class="pgsp-pillar"><span>🏠</span>Conexiones domiciliarias</article>
+                            <article class="pgsp-pillar"><span>📟</span>Sistemas de medición</article>
+                        </div>
+                    </section>
+
+                    <section class="pgsp-social-row">
+                        <div class="pgsp-social-image" role="img"
+                            aria-label="Gestión social e innovación territorial con comunidades"></div>
+                        <div class="pgsp-social-content">
+                            <h2>Gestión Social e Innovación Territorial</h2>
+                            <p>AWALA acompaña el proyecto con un Plan de Gestión Social para fortalecer la
+                                participación comunitaria, la apropiación de la infraestructura y el uso productivo de
+                                la energía.</p>
+                        </div>
+                    </section>
+
+                    <section class="pgsp-section">
+                        <h2>Laboratorio de Innovación Social</h2>
+                        <div class="pgsp-pillars-grid">
+                            <article class="pgsp-pillar"><span>🤝</span>Participación comunitaria</article>
+                            <article class="pgsp-pillar"><span>🏛️</span>Fortalecimiento organizativo</article>
+                            <article class="pgsp-pillar"><span>💡</span>Uso productivo de la energía</article>
+                            <article class="pgsp-pillar"><span>🧩</span>Articulación institucional</article>
+                        </div>
+                    </section>
+
+                    <section class="pgsp-bottom-cta" role="img"
+                        aria-label="Equipo de trabajo en territorios de transformación social">
+                        <div>
+                            <h2>Trabaja con nosotros</h2>
+                            <p>Únete a nuestro equipo y participa en este proyecto de transformación territorial.</p>
+                            <a class="pgsp-cta" href="participa.html">Ver convocatorias</a>
+                        </div>
+                    </section>
                 </article>
             </div>
         </section>
@@ -234,7 +188,8 @@
         <div class="container footer-top">
             <div class="footer-brand">
                 <div class="footer-brand-head">
-                    <img src="./images/logo.png" alt="Logo Awala" class="footer-logo" />
+                    <img src="./images/logo.png" alt="Logo Awala" class="footer-logo" width="48" height="48"
+                        loading="lazy" decoding="async" />
                     <div>
                         <h3>Awala ONG</h3>
                         <p class="footer-tag">Construyendo paz desde los territorios</p>
