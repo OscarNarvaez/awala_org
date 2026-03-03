@@ -385,7 +385,9 @@ if (contactForm) {
             }
         };
 
-        const contactEndpoint = (contactForm.dataset.contactEndpoint || contactForm.dataset.formspreeEndpoint || '').trim();
+        const formspreeEndpoint = (contactForm.dataset.formspreeEndpoint || '').trim();
+        const isValidFormspreeEndpoint = /^https:\/\/formspree\.io\/f\/[a-zA-Z0-9]+$/.test(formspreeEndpoint);
+        const hasPlaceholderEndpoint = formspreeEndpoint.includes('TU_FORM_ID');
 
         contactForm.addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -396,8 +398,8 @@ if (contactForm) {
                 return;
             }
 
-            if (!contactEndpoint || contactEndpoint.includes('TU_ENDPOINT')) {
-                setFormStatus('Falta configurar el endpoint de contacto.', 'is-error');
+            if (!isValidFormspreeEndpoint || hasPlaceholderEndpoint) {
+                setFormStatus('Falta configurar Formspree.', 'is-error');
                 return;
             }
 
@@ -416,7 +418,7 @@ if (contactForm) {
             setFormStatus('Enviando mensaje...', 'is-loading');
 
             try {
-                const response = await fetch(contactEndpoint, {
+                const response = await fetch(formspreeEndpoint, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -425,16 +427,10 @@ if (contactForm) {
                     body: JSON.stringify(formData)
                 });
 
-                let result = null;
-
-                try {
-                    result = await response.json();
-                } catch {
-                    result = null;
-                }
+                const result = await response.json();
 
                 if (!response.ok) {
-                    const detail = result?.message || result?.errors?.[0]?.message || 'No se pudo enviar el formulario.';
+                    const detail = result?.errors?.[0]?.message || 'No se pudo enviar el formulario.';
                     throw new Error(detail);
                 }
 

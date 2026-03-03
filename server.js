@@ -3,7 +3,6 @@ require('dotenv').config();
 const path = require('path');
 const crypto = require('crypto');
 const express = require('express');
-const nodemailer = require('nodemailer');
 
 const app = express();
 const PORT = Number(process.env.PORT || 5500);
@@ -15,30 +14,8 @@ const WOMPI_INTEGRITY_SECRET = (process.env.WOMPI_INTEGRITY_SECRET || '').trim()
 const WOMPI_EVENTS_SECRET = (process.env.WOMPI_EVENTS_SECRET || '').trim();
 const WOMPI_API_BASE = 'https://api.wompi.co/v1';
 
-const CONTACT_TO_EMAIL = (process.env.CONTACT_TO_EMAIL || 'awala@awalacolombia.org').trim();
-const CONTACT_FROM_EMAIL = (process.env.CONTACT_FROM_EMAIL || '').trim();
-const SMTP_HOST = (process.env.SMTP_HOST || '').trim();
-const SMTP_PORT = Number(process.env.SMTP_PORT || 465);
-const SMTP_SECURE = String(process.env.SMTP_SECURE || 'true').trim().toLowerCase() === 'true';
-const SMTP_USER = (process.env.SMTP_USER || '').trim();
-const SMTP_PASS = (process.env.SMTP_PASS || '').trim();
-
 app.use(express.json());
 app.use(express.static(__dirname));
-
-const hasSmtpConfig = () => Boolean(SMTP_HOST && SMTP_PORT && SMTP_USER && SMTP_PASS);
-
-const contactTransporter = hasSmtpConfig()
-    ? nodemailer.createTransport({
-        host: SMTP_HOST,
-        port: SMTP_PORT,
-        secure: SMTP_SECURE,
-        auth: {
-            user: SMTP_USER,
-            pass: SMTP_PASS
-        }
-    })
-    : null;
 
 const assertWompiConfig = (res) => {
     if (!WOMPI_PUBLIC_KEY || !WOMPI_PRIVATE_KEY || !WOMPI_INTEGRITY_SECRET) {
@@ -138,67 +115,6 @@ const validateWompiWebhookSignature = (payload, eventsSecret) => {
         receivedChecksum
     };
 };
-
-const sanitizeHeaderText = (value) => String(value || '').replace(/[\r\n]+/g, ' ').trim();
-
-app.post('/api/contact', async (req, res) => {
-    if (!contactTransporter) {
-        res.status(500).json({
-            message: 'El canal de contacto no está configurado en el servidor. Revisa SMTP_HOST, SMTP_PORT, SMTP_USER y SMTP_PASS.'
-        });
-        return;
-    }
-
-    const name = sanitizeHeaderText(req.body?.nombre);
-    const email = String(req.body?.correo || '').trim();
-    const interest = sanitizeHeaderText(req.body?.interes || req.body?.tipo_contacto || 'Otro');
-    const message = String(req.body?.mensaje || '').trim();
-
-    if (!name || !email || !message) {
-        res.status(400).json({ message: 'Nombre, correo y mensaje son obligatorios.' });
-        return;
-    }
-
-    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-    if (!isValidEmail) {
-        res.status(400).json({ message: 'El correo electrónico no es válido.' });
-        return;
-    }
-
-    const fromAddress = CONTACT_FROM_EMAIL || SMTP_USER;
-
-    try {
-        await contactTransporter.sendMail({
-            from: fromAddress,
-            to: CONTACT_TO_EMAIL,
-            replyTo: email,
-            subject: `Nuevo contacto web AWALA - ${interest}`,
-            text: [
-                'Nuevo mensaje desde el formulario de contacto de AWALA',
-                '',
-                `Nombre: ${name}`,
-                `Correo: ${email}`,
-                `Interés: ${interest}`,
-                '',
-                'Mensaje:',
-                message
-            ].join('\n'),
-            html: `
-                <h2>Nuevo mensaje desde el formulario de contacto de AWALA</h2>
-                <p><strong>Nombre:</strong> ${name}</p>
-                <p><strong>Correo:</strong> ${email}</p>
-                <p><strong>Interés:</strong> ${interest}</p>
-                <p><strong>Mensaje:</strong></p>
-                <p>${message.replace(/\n/g, '<br>')}</p>
-            `
-        });
-
-        res.json({ ok: true, message: 'Mensaje enviado correctamente.' });
-    } catch (error) {
-        res.status(502).json({ message: `No se pudo enviar el correo de contacto: ${error.message}` });
-    }
-});
 
 const fetchMerchantInfo = async () => {
     const response = await fetch(`${WOMPI_API_BASE}/merchants/${encodeURIComponent(WOMPI_PUBLIC_KEY)}`);
@@ -346,11 +262,5 @@ app.listen(PORT, () => {
 
     if (!WOMPI_EVENTS_SECRET) {
         console.warn('Webhook de Wompi sin validación activa. Configura WOMPI_EVENTS_SECRET en .env');
-    }
-
-    if (!contactTransporter) {
-        console.warn('Formulario de contacto sin envío activo. Configura SMTP_HOST, SMTP_PORT, SMTP_USER y SMTP_PASS en .env');
-    } else {
-        console.log(`Formulario de contacto configurado para entregar mensajes en ${CONTACT_TO_EMAIL}`);
     }
 });

@@ -27,7 +27,7 @@ Este proyecto implementa un sitio **multi-página** en HTML, CSS y JavaScript va
 - Página de noticias y novedades
 - Página de participación (alianzas, voluntariado, convocatorias, empleo)
 - Página de donaciones con formulario y resumen dinámico
-- Formulario de contacto integrado vía backend SMTP
+- Formulario de contacto integrado vía Formspree
 
 ## Características principales
 
@@ -49,8 +49,7 @@ Este proyecto implementa un sitio **multi-página** en HTML, CSS y JavaScript va
 - **CSS3** (estilos personalizados, diseño responsive)
 - **JavaScript (ES6+)** sin frameworks
 - **Google Fonts (Montserrat)**
-- **Node.js + Express** para endpoints de contacto y donaciones
-- **Nodemailer** para envío de correos de contacto
+- **Formspree** para el formulario de contacto
 
 ## Estructura del proyecto
 
@@ -80,9 +79,7 @@ npm install
 
 2. Crear archivo `.env` tomando como base `.env.example` (copia y pega su contenido).
 
-3. Completar variables en `.env`:
-  - Wompi: `WOMPI_PUBLIC_KEY`, `WOMPI_PRIVATE_KEY`, `WOMPI_INTEGRITY_SECRET`, `WOMPI_EVENTS_SECRET`
-  - Contacto SMTP: `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`
+3. Completar llaves de Wompi en `.env` (`WOMPI_PUBLIC_KEY`, `WOMPI_PRIVATE_KEY`, `WOMPI_INTEGRITY_SECRET`, `WOMPI_EVENTS_SECRET`).
 
 4. Levantar el sitio:
 
@@ -119,16 +116,12 @@ El proyecto está alojado en GitHub:
 
 ## Configuraciones importantes
 
-### 1) Contacto por SMTP (backend)
-El formulario de contacto envía al endpoint:
+### 1) Contacto por Formspree
+En `index.html` se usa el atributo:
 
-- `POST /api/contact`
+- `data-formspree-endpoint="https://formspree.io/f/mojnzygk"`
 
-El destinatario final se define con:
-
-- `CONTACT_TO_EMAIL=awala@awalacolombia.org`
-
-Si usas Google Workspace, configura SMTP con `smtp.gmail.com` y credenciales válidas en `.env`.
+Si cambias de cuenta o formulario, actualiza ese endpoint.
 
 ### 2) Donaciones (Wompi)
 La pasarela quedó integrada con endpoints en `server.js`:
