@@ -240,6 +240,53 @@ body {
     font-size: 18px;
 }
 
+.project-highlight-cta {
+    background: linear-gradient(135deg, #163a83, #2e67d2);
+    padding: 28px 0;
+}
+
+.project-highlight-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.project-highlight-inner h2 {
+    color: #ffffff;
+    font-size: clamp(22px, 2.8vw, 34px);
+    line-height: 1.2;
+}
+
+.project-highlight-button {
+    text-decoration: none;
+    color: #15346d;
+    background: linear-gradient(180deg, #ffe27d, #ffd24c);
+    border-radius: 999px;
+    font-weight: 800;
+    padding: 13px 22px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+    animation: ctaPulse 1.5s ease-in-out infinite;
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.project-highlight-button:hover {
+    transform: translateY(-2px) scale(1.02);
+    filter: brightness(1.03);
+}
+
+@keyframes ctaPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25), 0 0 0 0 rgba(255, 216, 85, 0.45);
+    }
+
+    50% {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25), 0 0 0 10px rgba(255, 216, 85, 0);
+    }
+}
+
 .mission {
     background: #ffffff;
     padding: 50px 0 10px;
@@ -952,6 +999,12 @@ body {
     border-radius: 8px;
     font-weight: 700;
     padding: 11px 18px;
+}
+
+.pgsp-cta-button {
+    border: none;
+    cursor: pointer;
+    font: inherit;
 }
 
 .pgsp-cta:hover {
@@ -2299,6 +2352,11 @@ body {
         margin-top: 30px;
         padding: 14px 18px;
         font-size: 16px;
+        text-align: center;
+    }
+
+    .project-highlight-inner {
+        flex-direction: column;
         text-align: center;
     }
 

@@ -735,3 +735,9 @@ if (donationForm) {
 
     updateSummary();
 }
+
+document.querySelectorAll('[data-no-open-calls]').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+        window.alert('No hay convocatorias abiertas');
+    });
+});
