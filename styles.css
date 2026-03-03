@@ -1121,6 +1121,12 @@ body {
     margin-bottom: 6px;
 }
 
+.pgsp-detail-link-wrap {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+}
+
 .pgsp-social-row {
     margin-top: 18px;
     display: grid;
