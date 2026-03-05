@@ -2244,6 +2244,10 @@ body :where(p, li, a, span, strong, small, label, h2, h3, h4, h5, h6) {
     color: #0035ff;
 }
 
+.awala-text {
+    color: #ffffff;
+}
+
 .about-intro,
 .objective-slide,
 .project-slide,
