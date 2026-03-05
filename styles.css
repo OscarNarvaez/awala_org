@@ -1,8 +1,8 @@
 :root {
-    --blue: #2858b8;
-    --blue-light: #5b7fd1;
+    --blue: #1c5739;
+    --blue-light: #2f7a56;
     --white: #ffffff;
-    --text: #1b1b1b;
+    --text: #1c5739;
     --shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
@@ -112,7 +112,7 @@ body {
     display: block;
     width: 100%;
     height: 2.5px;
-    background: #1d2c64;
+    background: #1c5739;
     border-radius: 3px;
 }
 
@@ -164,7 +164,7 @@ body {
 }
 
 .nav-dropdown-menu a {
-    color: #244287;
+    color: #1c5739;
     text-shadow: none;
     -webkit-text-stroke: 0;
     font-size: 14px;
@@ -173,16 +173,16 @@ body {
 }
 
 .nav-dropdown-menu a:hover {
-    background: rgba(40, 88, 184, 0.12);
-    color: #1d2c64;
+    background: rgba(28, 87, 57, 0.12);
+    color: #1c5739;
 }
 
 .nav-links a.is-active {
     color: #ffffff;
-    background: rgba(40, 88, 184, 0.88);
+    background: rgba(28, 87, 57, 0.88);
     border-radius: 999px;
     padding: 8px 14px;
-    box-shadow: 0 8px 16px rgba(40, 88, 184, 0.28);
+    box-shadow: 0 8px 16px rgba(28, 87, 57, 0.28);
     -webkit-text-stroke: 0;
     text-shadow: none;
 }
@@ -238,7 +238,7 @@ body {
 .hero-callout {
     margin: 48px auto 0;
     background: var(--white);
-    color: var(--blue);
+    color: #1c5739;
     padding: 18px 36px;
     width: min(520px, 90%);
     border-radius: 8px;
@@ -249,8 +249,12 @@ body {
     font-size: 18px;
 }
 
+.hero-callout span {
+    color: #1c5739 !important;
+}
+
 .project-highlight-cta {
-    background: linear-gradient(135deg, #163a83, #2e67d2);
+    background: linear-gradient(135deg, #123a27, #2f7a56);
     padding: 28px 0;
 }
 
@@ -269,7 +273,7 @@ body {
 
 .project-highlight-button {
     text-decoration: none;
-    color: #15346d;
+    color: #1c5739;
     background: linear-gradient(180deg, #ffe27d, #ffd24c);
     border-radius: 999px;
     font-weight: 800;
@@ -879,7 +883,7 @@ body {
 }
 
 .news-hero h1 {
-    color: #1d2c64;
+    color: #1c5739;
     font-size: 32px;
     margin-bottom: 12px;
 }
@@ -930,7 +934,7 @@ body {
 }
 
 .news-card h3 {
-    color: #1d2c64;
+    color: #1c5739;
     font-size: 18px;
 }
 
@@ -988,6 +992,7 @@ body {
     min-height: 320px;
     display: flex;
     align-items: center;
+    position: relative;
     background-image: linear-gradient(90deg, rgba(8, 25, 56, 0.76), rgba(8, 25, 56, 0.22)), url("https://s3.amazonaws.com/rtvc-assets-canalinstitucional.tv/s3fs-public/styles/interna_noticias_after_1222x547_/public/2023-02/tumaco.jpg?itok=rc7599to");
     background-size: cover;
     background-position: center;
@@ -997,6 +1002,16 @@ body {
 .pgsp-hero-content {
     max-width: 640px;
     color: #ffffff;
+}
+
+.pgsp-hero-logo {
+    width: clamp(100px, 10vw, 140px);
+    height: auto;
+    display: block;
+    margin-bottom: 0;
+    position: absolute;
+    top: 24px;
+    right: 24px;
 }
 
 .pgsp-hero-content h1 {
@@ -1015,7 +1030,7 @@ body {
 .pgsp-cta {
     display: inline-block;
     text-decoration: none;
-    color: #17346c;
+    color: #1c5739;
     background: #ffd855;
     border-radius: 8px;
     font-weight: 700;
@@ -1038,7 +1053,7 @@ body {
 
 .pgsp-section h2 {
     text-align: center;
-    color: #1c3b79;
+    color: #1c5739;
     font-size: clamp(24px, 2.4vw, 32px);
     margin-bottom: 16px;
 }
@@ -1059,7 +1074,7 @@ body {
 
 .pgsp-stat-card strong {
     display: block;
-    color: #155f95;
+    color: #206b44;
     font-size: clamp(28px, 3vw, 38px);
 }
 
@@ -1090,7 +1105,7 @@ body {
 }
 
 .pgsp-territory-card h3 {
-    color: #1d2c64;
+    color: #1c5739;
     margin-bottom: 8px;
 }
 
@@ -1121,7 +1136,7 @@ body {
     display: grid;
     place-items: center;
     text-align: center;
-    color: #1d2c64;
+    color: #1c5739;
     font-weight: 700;
     line-height: 1.35;
     padding: 10px;
@@ -1164,7 +1179,7 @@ body {
 }
 
 .pgsp-social-content h2 {
-    color: #1c3b79;
+    color: #1c5739;
     font-size: clamp(24px, 2.4vw, 34px);
     margin-bottom: 10px;
 }
@@ -1203,7 +1218,7 @@ body {
 }
 
 .allies-section h2 {
-    color: #1d2c64;
+    color: #1c5739;
     text-align: center;
     font-size: clamp(24px, 2.8vw, 34px);
     margin-bottom: 18px;
@@ -1455,7 +1470,7 @@ body {
 }
 
 .participate-hero h1 {
-    color: #1d2c64;
+    color: #1c5739;
     font-size: 32px;
     margin-bottom: 12px;
 }
@@ -1525,7 +1540,7 @@ body {
 }
 
 .participate-panel h2 {
-    color: #1d2c64;
+    color: #1c5739;
     font-size: 28px;
     margin-bottom: 12px;
 }
@@ -1577,7 +1592,7 @@ body {
 
 .home-mini-title {
     text-align: center;
-    color: #1d2c64;
+    color: #1c5739;
     font-size: clamp(28px, 3vw, 36px);
     margin-bottom: 30px;
 }
@@ -1600,7 +1615,7 @@ body {
 }
 
 .home-mini-card h3 {
-    color: #1d2c64;
+    color: #1c5739;
     font-size: 22px;
 }
 
@@ -1722,7 +1737,7 @@ body {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(120deg, rgba(19, 32, 63, 0.92), rgba(40, 88, 184, 0.78)),
+    background-image: linear-gradient(120deg, rgba(12, 45, 30, 0.92), rgba(28, 87, 57, 0.78)),
         url("https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1800&q=80");
     background-size: cover;
     background-position: center;
@@ -1760,7 +1775,7 @@ body {
 }
 
 .donation-impact-card h3 {
-    color: #1d2c64;
+    color: #1d6942;
     font-size: 30px;
     margin-bottom: 8px;
 }
@@ -1794,7 +1809,7 @@ body {
 }
 
 .donation-form-card h2 {
-    color: #1d2c64;
+    color: #1c5739;
     font-size: 30px;
     margin-bottom: 10px;
 }
@@ -1817,7 +1832,7 @@ body {
 }
 
 .donation-label {
-    color: #1d2c64;
+    color: #000000;
     font-weight: 700;
     font-size: 14px;
 }
@@ -1832,7 +1847,7 @@ body {
     border: 1px solid #b9c8ec;
     border-radius: 999px;
     background: #ffffff;
-    color: #2c3f73;
+    color: #000000;
     padding: 9px 14px;
     font-family: "Montserrat", sans-serif;
     font-size: 13px;
@@ -1886,7 +1901,7 @@ body {
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    color: #4d5f89;
+    color: #000000;
     font-size: 13px;
     line-height: 1.5;
 }
@@ -1944,7 +1959,7 @@ body {
 }
 
 .donation-summary-card h3 {
-    color: #1d2c64;
+    color: #1c5739;
     font-size: 24px;
 }
 
@@ -1986,7 +2001,7 @@ body {
 
 .donation-trust-box h4,
 .donation-transfer-box h4 {
-    color: #1d2c64;
+    color: #000000;
     margin-bottom: 7px;
     font-size: 16px;
 }
@@ -2018,7 +2033,7 @@ body {
 }
 
 .contact-info h2 {
-    color: #1d2c64;
+    color: #1c5739;
     font-size: 30px;
     margin-bottom: 14px;
 }
@@ -2039,7 +2054,7 @@ body {
 }
 
 .contact-list strong {
-    color: #1d2c64;
+    color: #000000;
 }
 
 .contact-form {
@@ -2053,7 +2068,7 @@ body {
 }
 
 .contact-form label {
-    color: #1d2c64;
+    color: #000000;
     font-weight: 600;
     font-size: 14px;
 }
@@ -2097,7 +2112,7 @@ body {
 }
 
 .contact-form button:hover {
-    background: #1f499b;
+    background: #30a066;
 }
 
 .contact-form button:disabled {
@@ -2113,7 +2128,7 @@ body {
 }
 
 .contact-form-status.is-loading {
-    color: #365794;
+    color: #278a57;
 }
 
 .contact-form-status.is-success {
@@ -2125,7 +2140,7 @@ body {
 }
 
 .site-footer {
-    background: linear-gradient(135deg, #0f1a35, #1a2d57);
+    background: linear-gradient(135deg, #0f2f21, #1c5739);
     color: #dbe4ff;
 }
 
@@ -2214,6 +2229,156 @@ body {
 .footer-bottom p {
     color: #b8c9ee;
     font-size: 12.5px;
+}
+
+body :where(p, li, a, span, strong, small, label, h2, h3, h4, h5, h6) {
+    color: #1c5739;
+}
+
+.hero :where(p, a, span, strong, small, label, h2, h3, h4, h5, h6),
+.project-highlight-cta :where(p, a, span, strong, small, label, h2, h3, h4, h5, h6),
+.pgsp-hero :where(p, a, span, strong, small, label, h2, h3, h4, h5, h6),
+.pgsp-bottom-cta :where(p, a, span, strong, small, label, h2, h3, h4, h5, h6),
+.donations-hero :where(p, a, span, strong, small, label, h2, h3, h4, h5, h6),
+.site-footer :where(p, a, span, strong, small, label, h2, h3, h4, h5, h6) {
+    color: #ffffff;
+}
+
+.about-intro,
+.objective-slide,
+.project-slide,
+.pgsp-stat-card,
+.pgsp-territory-card,
+.pgsp-pillar,
+.pgsp-social-row,
+.allies-logos-row img,
+.project-detail-card,
+.project-closing-message,
+.participate-option,
+.home-mini-card,
+.participate-mail-picker,
+.donation-trust-box,
+.donation-transfer-box,
+.contact-info {
+    border-color: rgba(28, 87, 57, 0.18);
+}
+
+.home-mini-card,
+.participate-option,
+.participate-mail-picker,
+.donation-trust-box,
+.donation-transfer-box,
+.contact-info,
+.project-detail-card,
+.pgsp-territory-card,
+.pgsp-pillar,
+.pgsp-social-row,
+.allies-logos-row img,
+.project-closing-message {
+    background: #f2f8f4;
+}
+
+.mission-card-body a,
+.mission-feature-card a,
+.news-feature-card a,
+.news-side-card a,
+.news-card a,
+.participate-panel a,
+.home-mini-card a,
+.project-pdf-link {
+    color: #1c5739;
+}
+
+/* Normalización final del tema verde */
+body :where(.brand-tagline,
+    .about-intro p,
+    .mission-card-body p,
+    .mission-feature-card p,
+    .objective-slide p,
+    .news-feature-card p,
+    .news-side-card p,
+    .values-list ul,
+    .news-hero p,
+    .news-card-date,
+    .news-card p,
+    .projects-hero p,
+    .pgsp-stat-card span,
+    .pgsp-territory-card ul,
+    .pgsp-note,
+    .pgsp-social-content p,
+    .project-status,
+    .project-item-body p,
+    .project-detail-card ul,
+    .participate-hero p,
+    .participate-option,
+    .participate-panel li,
+    .participate-mail-picker p,
+    .participate-mail-option,
+    .donation-impact-card p,
+    .donation-intro,
+    .donation-custom-amount label,
+    .donation-form select,
+    .donation-form input,
+    .donation-check,
+    .donation-form-status.is-loading,
+    .donation-summary-list span,
+    .donation-trust-box p,
+    .donation-transfer-box p,
+    .contact-info p,
+    .contact-list,
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea) {
+    color: #202020 !important;
+}
+
+body :where(.nav-toggle,
+    .nav-dropdown-menu,
+    .about-intro,
+    .objective-slide,
+    .project-slide,
+    .pgsp-stat-card,
+    .pgsp-territory-card,
+    .pgsp-pillar,
+    .pgsp-social-row,
+    .allies-logos-row img,
+    .project-detail-card,
+    .project-closing-message,
+    .participate-option,
+    .home-mini-card,
+    .participate-mail-picker,
+    .donation-trust-box,
+    .donation-transfer-box,
+    .contact-info,
+    .donation-summary-list li) {
+    border-color: rgba(28, 87, 57, 0.22) !important;
+}
+
+body :where(.objective-slide,
+    .project-slide,
+    .pgsp-stat-card,
+    .pgsp-territory-card,
+    .pgsp-pillar,
+    .pgsp-social-row,
+    .allies-logos-row img,
+    .project-detail-card,
+    .project-closing-message,
+    .participate-option,
+    .home-mini-card,
+    .participate-mail-picker,
+    .donation-trust-box,
+    .donation-transfer-box,
+    .contact-info,
+    .donation-summary-list li) {
+    background-color: #f2f8f4 !important;
+}
+
+body :where(.objectives-control, .projects-control) {
+    box-shadow: 0 12px 24px rgba(28, 87, 57, 0.28) !important;
+}
+
+body :where(.objective-dot, .project-dot) {
+    background: rgba(28, 87, 57, 0.35) !important;
 }
 
 @media (max-width: 1100px) {
@@ -2511,6 +2676,12 @@ body {
     .pgsp-hero {
         min-height: 280px;
         padding: 24px 18px;
+    }
+
+    .pgsp-hero-logo {
+        width: 72px;
+        top: 16px;
+        right: 16px;
     }
 
     .pgsp-section {
