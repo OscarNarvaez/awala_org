@@ -2201,6 +2201,36 @@ body {
     color: #ffffff;
 }
 
+/* Redes sociales en el footer */
+.footer-social {
+    display: flex;
+    gap: 14px;
+    margin-top: 14px;
+    align-items: center;
+}
+
+.footer-social-link {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #c5d4f5;
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.footer-social-link:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.footer-social-link svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
 .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.16);
     display: flex;
