@@ -239,13 +239,13 @@ body {
     margin: 48px auto 0;
     background: var(--white);
     color: #1c5739;
-    padding: 18px 36px;
+    padding: 18px 15px;
     width: min(520px, 90%);
     border-radius: 8px;
     border-top: 4px solid var(--blue);
     box-shadow: var(--shadow);
     text-align: center;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 18px;
 }
 
@@ -274,7 +274,7 @@ body {
 .project-highlight-button {
     text-decoration: none;
     color: #1c5739;
-    background: linear-gradient(180deg, #ffe27d, #ffd24c);
+    background: linear-gradient(180deg, #665edd, #209ad3);
     border-radius: 999px;
     font-weight: 800;
     padding: 13px 22px;
@@ -2213,7 +2213,6 @@ body {
     display: flex;
     align-items: center;
     gap: 7px;
-    color: #c5d4f5;
     text-decoration: none;
     font-size: 13px;
     transition: color 0.2s, transform 0.2s;
@@ -2271,7 +2270,7 @@ body :where(p, li, a, span, strong, small, label, h2, h3, h4, h5, h6) {
 .pgsp-bottom-cta :where(p, a, span, strong, small, label, h2, h3, h4, h5, h6),
 .donations-hero :where(p, a, span, strong, small, label, h2, h3, h4, h5, h6),
 .site-footer :where(p, a, span, strong, small, label, h2, h3, h4, h5, h6) {
-    color: #0035ff;
+    color: #ace60e;
 }
 
 .awala-text {
