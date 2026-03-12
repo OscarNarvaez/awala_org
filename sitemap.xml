@@ -1,28 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  
+  <!-- Página principal AWALA -->
   <url>
     <loc>https://awalacolombia.org/</loc>
+    <lastmod>2026-03-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://awalacolombia.org/images/logo.png</image:loc>
+      <image:title>Logo AWALA ONG Colombia</image:title>
+      <image:caption>AWALA - Construyendo paz desde los territorios en Colombia</image:caption>
+    </image:image>
   </url>
+  
+  <!-- Proyectos AWALA -->
   <url>
     <loc>https://awalacolombia.org/projects.html</loc>
+    <lastmod>2026-03-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://awalacolombia.org/images/logo.png</image:loc>
+      <image:title>Proyectos AWALA ONG</image:title>
+      <image:caption>Proyectos de desarrollo comunitario y construcción de paz de AWALA</image:caption>
+    </image:image>
   </url>
+  
+  <!-- Participación AWALA -->
   <url>
     <loc>https://awalacolombia.org/participa.html</loc>
+    <lastmod>2026-03-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://awalacolombia.org/images/logo.png</image:loc>
+      <image:title>Participa con AWALA ONG</image:title>
+      <image:caption>Voluntariado, alianzas y oportunidades de participación en AWALA</image:caption>
+    </image:image>
   </url>
+  
+  <!-- Donaciones AWALA -->
   <url>
     <loc>https://awalacolombia.org/donaciones.html</loc>
+    <lastmod>2026-03-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://awalacolombia.org/images/logo.png</image:loc>
+      <image:title>Donaciones AWALA ONG</image:title>
+      <image:caption>Dona a AWALA y apoya la construcción de paz en Colombia</image:caption>
+    </image:image>
   </url>
+  
+  <!-- Noticias AWALA -->
   <url>
     <loc>https://awalacolombia.org/news.html</loc>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-03-12</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://awalacolombia.org/images/logo.png</image:loc>
+      <image:title>Noticias AWALA ONG</image:title>
+      <image:caption>Últimas noticias y convocatorias de AWALA Colombia</image:caption>
+    </image:image>
   </url>
+
+  <!-- Index alternativo -->
+  <url>
+    <loc>https://awalacolombia.org/index.html</loc>
+    <lastmod>2026-03-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>

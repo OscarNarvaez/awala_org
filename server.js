@@ -4,10 +4,15 @@ const path = require('path');
 const crypto = require('crypto');
 const express = require('express');
 const compression = require('compression');
+const helmet = require('helmet');
+const cors = require('cors');
+const rateLimit = require('express-rate-limit');
+const validator = require('validator');
 
 const app = express();
 const PORT = Number(process.env.PORT || 5500);
 const BASE_URL = (process.env.BASE_URL || `http://localhost:${PORT}`).replace(/\/$/, '');
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 const WOMPI_PUBLIC_KEY = (process.env.WOMPI_PUBLIC_KEY || '').trim();
 const WOMPI_PRIVATE_KEY = (process.env.WOMPI_PRIVATE_KEY || '').trim();
@@ -15,7 +20,112 @@ const WOMPI_INTEGRITY_SECRET = (process.env.WOMPI_INTEGRITY_SECRET || '').trim()
 const WOMPI_EVENTS_SECRET = (process.env.WOMPI_EVENTS_SECRET || '').trim();
 const WOMPI_API_BASE = 'https://api.wompi.co/v1';
 
-app.use(express.json());
+// ═══════════════════════════════════════════════════════════════════════════
+// SEGURIDAD: Headers HTTP con Helmet
+// ═══════════════════════════════════════════════════════════════════════════
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'", "https://checkout.wompi.co"],
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com"],
+            imgSrc: ["'self'", "data:", "https:", "blob:"],
+            connectSrc: ["'self'", "https://api.wompi.co", "https://formspree.io", "https://checkout.wompi.co"],
+            frameSrc: ["'self'", "https://checkout.wompi.co"],
+            objectSrc: ["'none'"],
+            upgradeInsecureRequests: IS_PRODUCTION ? [] : null
+        }
+    },
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SEGURIDAD: CORS - Orígenes permitidos
+// ═══════════════════════════════════════════════════════════════════════════
+const allowedOrigins = [
+    'https://awalacolombia.org',
+    'https://www.awalacolombia.org',
+    `http://localhost:${PORT}`,
+    BASE_URL
+];
+
+app.use(cors({
+    origin: (origin, callback) => {
+        // Permitir requests sin origin (ej: Postman, curl, mobile apps)
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Origen no permitido por CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SEGURIDAD: Rate Limiting - Protección contra DoS y spam
+// ═══════════════════════════════════════════════════════════════════════════
+const generalLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutos
+    max: 100, // máximo 100 requests por IP
+    message: { message: 'Demasiadas solicitudes, intenta de nuevo en 15 minutos.' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 30, // más restrictivo para APIs
+    message: { message: 'Demasiadas solicitudes a la API, intenta de nuevo más tarde.' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+const webhookLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minuto
+    max: 50, // webhooks pueden ser frecuentes pero limitados
+    message: { message: 'Demasiadas solicitudes de webhook.' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+app.use(generalLimiter);
+app.use('/api/', apiLimiter);
+app.use('/api/wompi/webhook', webhookLimiter);
+
+// ═══════════════════════════════════════════════════════════════════════════
+// UTILIDADES: Sanitización y validación de inputs
+// ═══════════════════════════════════════════════════════════════════════════
+const sanitizeInput = (input) => {
+    if (typeof input !== 'string') return '';
+    return validator.escape(validator.trim(input));
+};
+
+const isValidEmail = (email) => {
+    return validator.isEmail(email || '');
+};
+
+const isValidName = (name) => {
+    const sanitized = sanitizeInput(name);
+    return sanitized.length >= 2 && sanitized.length <= 100;
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// UTILIDADES: Manejo seguro de errores
+// ═══════════════════════════════════════════════════════════════════════════
+const handleApiError = (res, statusCode, userMessage, internalError = null) => {
+    if (internalError && !IS_PRODUCTION) {
+        console.error(`[Error interno]: ${internalError.message || internalError}`);
+    }
+    res.status(statusCode).json({ message: userMessage });
+};
+
+app.use(express.json({ limit: '10kb' })); // Limitar tamaño del body
 app.use(compression({ threshold: 1024 }));
 app.use(express.static(__dirname, {
     etag: true,
@@ -161,19 +271,36 @@ app.post('/api/wompi/checkout-data', async (req, res) => {
     }
 
     const amount = Number(req.body?.amount || 0);
-    const frequency = String(req.body?.frequency || 'unica');
-    const destination = String(req.body?.destination || 'general');
-    const donorName = String(req.body?.donorName || '').trim();
-    const donorEmail = String(req.body?.donorEmail || '').trim();
+    const frequency = sanitizeInput(req.body?.frequency || 'unica');
+    const destination = sanitizeInput(req.body?.destination || 'general');
+    const donorName = sanitizeInput(req.body?.donorName || '');
+    const donorEmail = validator.trim(req.body?.donorEmail || '').toLowerCase();
 
-    if (!Number.isFinite(amount) || amount < 5000) {
-        res.status(400).json({ message: 'El monto mínimo de donación es $5.000 COP.' });
-        return;
+    // Validación de monto
+    if (!Number.isFinite(amount) || amount < 5000 || amount > 50000000) {
+        return handleApiError(res, 400, 'El monto debe estar entre $5.000 y $50.000.000 COP.');
     }
 
-    if (!donorName || !donorEmail) {
-        res.status(400).json({ message: 'Nombre y correo son obligatorios para continuar.' });
-        return;
+    // Validación de nombre
+    if (!isValidName(donorName)) {
+        return handleApiError(res, 400, 'El nombre debe tener entre 2 y 100 caracteres válidos.');
+    }
+
+    // Validación de email
+    if (!isValidEmail(donorEmail)) {
+        return handleApiError(res, 400, 'Por favor ingresa un correo electrónico válido.');
+    }
+
+    // Validación de frecuencia
+    const allowedFrequencies = ['unica', 'mensual'];
+    if (!allowedFrequencies.includes(frequency)) {
+        return handleApiError(res, 400, 'Frecuencia de donación no válida.');
+    }
+
+    // Validación de destino
+    const allowedDestinations = ['educacion', 'mujeres', 'territorio', 'general'];
+    if (!allowedDestinations.includes(destination)) {
+        return handleApiError(res, 400, 'Destino de donación no válido.');
     }
 
     const currency = 'COP';
@@ -206,7 +333,7 @@ app.post('/api/wompi/checkout-data', async (req, res) => {
 
         res.json({ checkout });
     } catch (error) {
-        res.status(502).json({ message: `No se pudo iniciar el checkout en Wompi: ${error.message}` });
+        handleApiError(res, 502, 'No se pudo iniciar el proceso de donación. Intenta de nuevo más tarde.', error);
     }
 });
 
@@ -215,11 +342,11 @@ app.get('/api/wompi/transactions/:id', async (req, res) => {
         return;
     }
 
-    const transactionId = String(req.params.id || '').trim();
+    const transactionId = sanitizeInput(req.params.id || '');
 
-    if (!transactionId) {
-        res.status(400).json({ message: 'Id de transacción inválido.' });
-        return;
+    // Validar formato del ID de transacción (solo alfanuméricos y guiones)
+    if (!transactionId || !/^[a-zA-Z0-9\-]+$/.test(transactionId)) {
+        return handleApiError(res, 400, 'ID de transacción inválido.');
     }
 
     try {
@@ -232,8 +359,7 @@ app.get('/api/wompi/transactions/:id', async (req, res) => {
         const payload = await response.json();
 
         if (!response.ok) {
-            const detail = payload?.error?.reason || payload?.error?.messages?.[0] || 'No fue posible consultar la transacción.';
-            throw new Error(detail);
+            return handleApiError(res, 404, 'No se encontró la transacción solicitada.');
         }
 
         res.json({
@@ -244,7 +370,7 @@ app.get('/api/wompi/transactions/:id', async (req, res) => {
             paymentMethodType: payload?.data?.payment_method_type
         });
     } catch (error) {
-        res.status(502).json({ message: `Error validando transacción en Wompi: ${error.message}` });
+        handleApiError(res, 502, 'Error al consultar la transacción. Intenta de nuevo más tarde.', error);
     }
 });
 
@@ -274,14 +400,34 @@ app.get('/', (_, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// ═══════════════════════════════════════════════════════════════════════════
+// SEGURIDAD: Manejador de errores global
+// ═══════════════════════════════════════════════════════════════════════════
+app.use((err, req, res, next) => {
+    if (err.message === 'Origen no permitido por CORS') {
+        return res.status(403).json({ message: 'Acceso no autorizado.' });
+    }
+
+    console.error(`[Error no manejado]: ${err.message}`);
+    res.status(500).json({ message: 'Ha ocurrido un error inesperado.' });
+});
+
+// Ruta 404 para APIs
+app.use('/api/*', (req, res) => {
+    res.status(404).json({ message: 'Endpoint no encontrado.' });
+});
+
 app.listen(PORT, () => {
     console.log(`Awala web disponible en ${BASE_URL}`);
+    console.log(`Modo: ${IS_PRODUCTION ? 'PRODUCCIÓN' : 'DESARROLLO'}`);
 
     if (!WOMPI_PUBLIC_KEY || !WOMPI_PRIVATE_KEY || !WOMPI_INTEGRITY_SECRET) {
-        console.warn('Wompi no está configurado. Crea tu archivo .env a partir de .env.example');
+        console.warn('⚠️  Wompi no está configurado. Crea tu archivo .env a partir de .env.example');
     }
 
     if (!WOMPI_EVENTS_SECRET) {
-        console.warn('Webhook de Wompi sin validación activa. Configura WOMPI_EVENTS_SECRET en .env');
+        console.warn('⚠️  Webhook de Wompi sin validación activa. Configura WOMPI_EVENTS_SECRET en .env');
     }
+
+    console.log('✅ Seguridad habilitada: Helmet, CORS, Rate Limiting, Validación de inputs');
 });

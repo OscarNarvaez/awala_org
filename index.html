@@ -1,47 +1,217 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" prefix="og: https://ogp.me/ns#">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/png" href="./images/logo.jpg" />
-    <title>Awala ONG | Construyendo paz desde los territorios</title>
+
+    <!-- Favicon y Apple Touch Icons -->
+    <link rel="icon" type="image/png" href="./images/logo.png" />
+    <link rel="apple-touch-icon" href="./images/logo.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/logo.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/logo.png" />
+
+    <!-- Título SEO optimizado con keyword principal -->
+    <title>AWALA | ONG Colombia - Construcción de Paz, Derechos Humanos y Desarrollo Comunitario</title>
+
+    <!-- Meta descripción optimizada (155-160 caracteres) -->
     <meta name="description"
-        content="Awala ONG impulsa educación, desarrollo comunitario, equidad y derechos humanos para construir paz desde los territorios en Colombia." />
-    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+        content="AWALA es una ONG colombiana que construye paz desde los territorios. Trabajamos en educación, derechos humanos, equidad de género y desarrollo comunitario sostenible." />
+
+    <!-- Keywords relevantes -->
+    <meta name="keywords"
+        content="AWALA, Awala ONG, Awala Colombia, ONG Colombia, construcción de paz, derechos humanos, desarrollo comunitario, equidad de género, ONG Pasto, ONG Nariño, paz territorial, justicia social, mujeres víctimas, desplazados Colombia, ODS Colombia" />
+
+    <!-- Autor y copyright -->
+    <meta name="author" content="AWALA ONG Colombia" />
+    <meta name="copyright" content="AWALA ONG" />
+
+    <!-- Geo targeting para Colombia -->
+    <meta name="geo.region" content="CO-NAR" />
+    <meta name="geo.placename" content="Pasto, Nariño, Colombia" />
+    <meta name="geo.position" content="1.2136;-77.2811" />
+    <meta name="ICBM" content="1.2136, -77.2811" />
+
+    <!-- Idioma y región -->
+    <meta name="language" content="Spanish" />
+    <meta name="content-language" content="es-CO" />
+    <link rel="alternate" hreflang="es-CO" href="https://awalacolombia.org/" />
+    <link rel="alternate" hreflang="es" href="https://awalacolombia.org/" />
+    <link rel="alternate" hreflang="x-default" href="https://awalacolombia.org/" />
+
+    <!-- Robots y canonical -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow" />
     <link rel="canonical" href="https://awalacolombia.org/" />
+
+    <!-- Verificación de motores de búsqueda -->
+    <meta name="google-site-verification" content="XE3AgNhbYPtU_sWvyzrFwf6zQkeYmbXYtVvI" />
+    <meta name="msvalidate.01" content="CA21AC3E141AF4EA4030838F0E70F07F" />
+
+    <!-- Open Graph mejorado -->
     <meta property="og:locale" content="es_CO" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Awala ONG" />
-    <meta property="og:title" content="Awala ONG | Construyendo paz desde los territorios" />
+    <meta property="og:site_name" content="AWALA ONG Colombia" />
+    <meta property="og:title" content="AWALA | ONG Colombia - Construcción de Paz y Derechos Humanos" />
     <meta property="og:description"
-        content="Conectamos comunidades, territorio e innovación para transformar realidades con enfoque de derechos humanos." />
+        content="AWALA es una organización sin ánimo de lucro que impulsa educación, desarrollo comunitario, equidad de género y derechos humanos para construir paz desde los territorios en Colombia." />
     <meta property="og:url" content="https://awalacolombia.org/" />
     <meta property="og:image" content="https://awalacolombia.org/images/logo.png" />
+    <meta property="og:image:secure_url" content="https://awalacolombia.org/images/logo.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Logo AWALA ONG - Construyendo paz desde los territorios en Colombia" />
+
+    <!-- Twitter Cards mejorado -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Awala ONG | Construyendo paz desde los territorios" />
+    <meta name="twitter:site" content="@AwalaONG" />
+    <meta name="twitter:creator" content="@AwalaONG" />
+    <meta name="twitter:title" content="AWALA | ONG Colombia - Construcción de Paz y Derechos Humanos" />
     <meta name="twitter:description"
-        content="Organización sin ánimo de lucro enfocada en desarrollo comunitario, educación y construcción de paz." />
+        content="Organización colombiana que construye paz desde los territorios con enfoque en educación, derechos humanos y desarrollo comunitario sostenible." />
     <meta name="twitter:image" content="https://awalacolombia.org/images/logo.png" />
+    <meta name="twitter:image:alt" content="Logo AWALA ONG Colombia" />
+
+    <!-- Schema.org JSON-LD estructurado completo -->
     <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "NGO",
-            "name": "Awala ONG",
-            "url": "https://awalacolombia.org/",
-            "logo": "https://awalacolombia.org/images/logo.png",
-            "email": "contacto@awalaong.org",
-            "telephone": "+57 300 123 4567",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Bogotá",
-                "addressCountry": "CO"
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://awalacolombia.org/#organization",
+                "name": "AWALA",
+                "alternateName": ["Awala ONG", "AWALA ONG Colombia", "Awala Colombia", "Corporación AWALA"],
+                "url": "https://awalacolombia.org/",
+                "logo": {
+                    "@type": "ImageObject",
+                    "@id": "https://awalacolombia.org/#logo",
+                    "url": "https://awalacolombia.org/images/logo.png",
+                    "contentUrl": "https://awalacolombia.org/images/logo.png",
+                    "caption": "Logo AWALA ONG Colombia",
+                    "width": 512,
+                    "height": 512
+                },
+                "image": "https://awalacolombia.org/images/logo.png",
+                "description": "AWALA es una entidad sin ánimo de lucro colombiana dedicada a la construcción de paz desde los territorios, promoviendo educación, derechos humanos, equidad de género y desarrollo comunitario sostenible.",
+                "slogan": "Construyendo paz desde los territorios",
+                "foundingDate": "2020",
+                "foundingLocation": {
+                    "@type": "Place",
+                    "name": "Pasto, Nariño, Colombia"
+                },
+                "areaServed": {
+                    "@type": "Country",
+                    "name": "Colombia"
+                },
+                "email": "awala@awalacolombia.org",
+                "telephone": "+57 300 123 4567",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Pasto",
+                    "addressLocality": "Pasto",
+                    "addressRegion": "Nariño",
+                    "postalCode": "520001",
+                    "addressCountry": "CO"
+                },
+                "contactPoint": [
+                    {
+                        "@type": "ContactPoint",
+                        "telephone": "+57 300 123 4567",
+                        "contactType": "customer service",
+                        "email": "awala@awalacolombia.org",
+                        "availableLanguage": ["Spanish", "es"]
+                    }
+                ],
+                "sameAs": [
+                    "https://www.linkedin.com/company/awala-ong",
+                    "https://www.facebook.com/AwalaONG",
+                    "https://www.instagram.com/awala_ong",
+                    "https://twitter.com/AwalaONG"
+                ],
+                "knowsAbout": [
+                    "Construcción de paz",
+                    "Derechos Humanos",
+                    "Desarrollo comunitario",
+                    "Equidad de género",
+                    "Educación",
+                    "Objetivos de Desarrollo Sostenible",
+                    "Víctimas del conflicto armado",
+                    "Justicia social"
+                ],
+                "nonprofit": {
+                    "@type": "NonprofitType",
+                    "name": "Charitable"
+                }
             },
-            "sameAs": [
-                "https://www.linkedin.com/in/oscar-julian-narvaez-5b144120b/"
-            ]
-        }
-        </script>
+            {
+                "@type": "WebSite",
+                "@id": "https://awalacolombia.org/#website",
+                "url": "https://awalacolombia.org/",
+                "name": "AWALA ONG Colombia",
+                "description": "Sitio web oficial de AWALA, ONG colombiana dedicada a la construcción de paz y desarrollo comunitario",
+                "publisher": {
+                    "@id": "https://awalacolombia.org/#organization"
+                },
+                "inLanguage": "es-CO",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://awalacolombia.org/?s={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://awalacolombia.org/#webpage",
+                "url": "https://awalacolombia.org/",
+                "name": "AWALA | ONG Colombia - Construcción de Paz, Derechos Humanos y Desarrollo Comunitario",
+                "description": "AWALA es una ONG colombiana que construye paz desde los territorios. Trabajamos en educación, derechos humanos, equidad de género y desarrollo comunitario sostenible.",
+                "isPartOf": {
+                    "@id": "https://awalacolombia.org/#website"
+                },
+                "about": {
+                    "@id": "https://awalacolombia.org/#organization"
+                },
+                "inLanguage": "es-CO",
+                "primaryImageOfPage": {
+                    "@type": "ImageObject",
+                    "url": "https://awalacolombia.org/images/logo.png"
+                },
+                "breadcrumb": {
+                    "@id": "https://awalacolombia.org/#breadcrumb"
+                }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://awalacolombia.org/#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Inicio",
+                        "item": "https://awalacolombia.org/"
+                    }
+                ]
+            },
+            {
+                "@type": "NGO",
+                "@id": "https://awalacolombia.org/#ngo",
+                "name": "AWALA",
+                "alternateName": "Awala ONG Colombia",
+                "description": "Organización no gubernamental colombiana enfocada en construcción de paz, derechos humanos y desarrollo comunitario",
+                "url": "https://awalacolombia.org/",
+                "logo": "https://awalacolombia.org/images/logo.png",
+                "areaServed": "Colombia",
+                "keywords": "AWALA, ONG Colombia, paz, derechos humanos, desarrollo comunitario"
+            }
+        ]
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://pacificotaskforce.com" crossorigin />

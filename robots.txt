@@ -1,4 +1,53 @@
+# robots.txt para AWALA ONG Colombia
+# https://awalacolombia.org/
+
+# Permitir todos los crawlers principales
 User-agent: *
 Allow: /
+Allow: /index.html
+Allow: /projects.html
+Allow: /participa.html
+Allow: /donaciones.html
+Allow: /news.html
+Allow: /images/
 
+# Bloquear archivos sensibles y de desarrollo
+Disallow: /server.js
+Disallow: /.env
+Disallow: /.env.example
+Disallow: /node_modules/
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /*.log
+
+# Googlebot específico
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Bingbot específico
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+# Otros bots de búsqueda
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: facebot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Sitemap principal
 Sitemap: https://awalacolombia.org/sitemap.xml
+
+# Host preferido
+Host: https://awalacolombia.org
